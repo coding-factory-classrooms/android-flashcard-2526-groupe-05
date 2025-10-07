@@ -7,4 +7,46 @@
     android:layout_height="match_parent"
     tools:context=".ScoreActivity">
 
+    <TextView
+        android:id="@+id/difficultyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Difficulté : Facile"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Tu as 3 bonnes réponses sur 5"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/difficultyTextView"
+        app:layout_constraintStart_toStartOf="@+id/difficultyTextView"
+        app:layout_constraintTop_toBottomOf="@+id/difficultyTextView" />
+
+    <TextView
+        android:id="@+id/pourcentageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Taux de réussite : 60 %"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/resultTextView"
+        app:layout_constraintStart_toStartOf="@+id/resultTextView"
+        app:layout_constraintTop_toBottomOf="@+id/resultTextView" />
+
+    <Button
+        android:id="@+id/backToMenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="retour au menu principal"
+        app:layout_constraintEnd_toEndOf="@+id/pourcentageTextView"
+        app:layout_constraintStart_toStartOf="@+id/pourcentageTextView"
+        app:layout_constraintTop_toBottomOf="@+id/pourcentageTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
