@@ -1,5 +1,5 @@
 package com.example.flashcard;
-
+import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,16 +21,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDifficultyDialog() {
-        final String[] levels = {"Facile", "Moyen", "Difficile"};
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_difficulty);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choisis ton niveau de difficulté");
-        builder.setItems(levels, (dialog, which) -> {
-            String selected = levels[which];
-            Toast.makeText(this, "Niveau choisi : " + selected, Toast.LENGTH_SHORT).show();
-            //  Ici je pourrais ensuite lancer mon QuizActivity selon le niveau choisi
+        Button btnEasy = dialog.findViewById(R.id.btnEasy);
+        Button btnMedium = dialog.findViewById(R.id.btnMedium);
+        Button btnHard = dialog.findViewById(R.id.btnHard);
+        Button btnHardcore = dialog.findViewById(R.id.btnHardcore);
+
+        btnEasy.setOnClickListener(v -> {
+            Toast.makeText(this, "Beginner mode", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+            // Lancer QuizActivity avec niveau Facile
         });
-        builder.setNegativeButton("Annuler", (dialog, which) -> dialog.dismiss());
-        builder.show();
+
+        btnMedium.setOnClickListener(v -> {
+            Toast.makeText(this, "Intermediate mode", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+            // Lancer QuizActivity avec niveau Moyen
+        });
+
+        btnHard.setOnClickListener(v -> {
+            Toast.makeText(this, "Master mode", Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+            // Lancer QuizActivity avec niveau Difficile
+        });
+
+        btnHardcore.setOnClickListener(v -> {
+            Toast.makeText(this, " GOD mode  ! ", Toast.LENGTH_LONG).show();
+            dialog.dismiss();
+            // Lancer QuizActivity avec niveau Hardcore
+        });
+
+        dialog.show();
     }
+
 }

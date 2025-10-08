@@ -3,15 +3,9 @@
     android:shape="rectangle">
 
     <gradient
-        android:startColor="#FF0011"
-        android:endColor="#00FF00"
-        />
-    <!-- Facultatif : coins arrondis -->
-    <corners android:radius="8dp" />
+        android:startColor="#00C9FF"
+        android:endColor="#92FE9D"
+        android:angle="45" />
 
-    <!-- Facultatif : bordure -->
-    <stroke
-        android:width="2dp"
-        android:color="#CCCCCC" />
-
+    <corners android:radius="12dp" />
 </shape>
