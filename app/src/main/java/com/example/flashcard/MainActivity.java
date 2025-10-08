@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
             ));*/
 
 
+            Button testQuizButton = findViewById(R.id.testQuizButton);
+            testQuizButton.setOnClickListener(view -> {
+                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+                startActivity(intent);
+            });
+
             return insets;
         });
     }
