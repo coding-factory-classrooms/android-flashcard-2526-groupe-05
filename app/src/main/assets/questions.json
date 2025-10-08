@@ -1,0 +1,23 @@
+[
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/sushi",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Sushis", "Capotes", "Assurances"],
+    "correctAnswer": "Sushis",
+    "pauseTimeMs": 28000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/bonbon",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Job board", "Bonbon", "Medicament"],
+    "correctAnswer": "Bonbon",
+    "pauseTimeMs": 21000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/boisson",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Chirurgie", "Boisson", "Marque de vetement"],
+    "correctAnswer": "Boisson",
+    "pauseTimeMs": 4000
+  }
+]
