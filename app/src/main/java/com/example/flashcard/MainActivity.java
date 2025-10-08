@@ -47,33 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             });*/
 
-            /*ArrayList<Question> questionList = new ArrayList<>();
-
-            questionList.add(new Question(
-                    "android.resource://" + getPackageName() + "/" + R.raw.pub1,
-                    "De quelle marque est cette pub ?",
-                    List.of("Old Spice", "L’Oréal", "Axe"),
-                    "Old Spice",
-                    7000 // pause à 7 secondes
-            ));
-
-            questionList.add(new Question(
-                    "android.resource://" + getPackageName() + "/" + R.raw.pub2,
-                    "Cette pub complètement absurde vend en réalité…",
-                    List.of("Une boisson énergétique", "Un déodorant", "Un shampoing"),
-                    "Une boisson énergétique",
-                    6000
-            ));
-
-            questionList.add(new Question(
-                    "android.resource://" + getPackageName() + "/" + R.raw.pub3,
-                    "À la fin de cette pub, on découvre qu’il s’agit d’une publicité pour :",
-                    List.of("Des pneus", "Un téléphone", "Un jeu mobile"),
-                    "Des pneus",
-                    8000
-            ));*/
-
-
             Button testQuizButton = findViewById(R.id.testQuizButton);
             testQuizButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainActivity.this, QuizActivity.class);
