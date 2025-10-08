@@ -55,4 +55,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="24dp"/>
 
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="400dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/videoView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
