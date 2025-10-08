@@ -38,16 +38,16 @@ public class MainActivity extends AppCompatActivity {
             //Bouton temporaire pour tester ScoreActivity
             //il faut appeler cette fonction à la fin du quiz
             //il faut une valeur String pour "difficulty" et un int pour "totalCorrectAnswers" et "totalQuestions"
-            Button testScoreButton = findViewById(R.id.testScoreButton);
+            /*Button testScoreButton = findViewById(R.id.testScoreButton);
             testScoreButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
                 intent.putExtra("difficulty", "Facile");
                 intent.putExtra("totalCorrectAnswers", 8);
                 intent.putExtra("totalQuestions", 10);
                 startActivity(intent);
-            });
+            });*/
 
-            ArrayList<Question> questionList = new ArrayList<>();
+            /*ArrayList<Question> questionList = new ArrayList<>();
 
             questionList.add(new Question(
                     "android.resource://" + getPackageName() + "/" + R.raw.pub1,
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     List.of("Des pneus", "Un téléphone", "Un jeu mobile"),
                     "Des pneus",
                     8000
-            ));
+            ));*/
 
 
             return insets;

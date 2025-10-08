@@ -29,7 +29,7 @@ public class Question {
     public int getPauseTimeMs() { return pauseTimeMs; }
 }
 
-public class QuestionRepository {
+/*public class QuestionRepository {
 
     public static List<Question> getQuestions(Context context) {
         List<Question> questionList = new ArrayList<>();
@@ -52,5 +52,5 @@ public class QuestionRepository {
 
         return questionList;
     }
-}
+}*/
 
