@@ -49,4 +49,14 @@
         app:layout_constraintEnd_toEndOf="@+id/pourcentageTextView"
         app:layout_constraintStart_toStartOf="@+id/pourcentageTextView"
         app:layout_constraintTop_toBottomOf="@+id/pourcentageTextView" />
+
+    <Button
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Partage ton Score avec tes amis"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/backToMenuButton"
+        app:layout_constraintStart_toStartOf="@+id/backToMenuButton"
+        app:layout_constraintTop_toBottomOf="@+id/backToMenuButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,8 @@ public class ScoreActivity extends AppCompatActivity {
     TextView difficultyTextView;
     TextView pourcentageTextView;
     Button backToMenuButton;
+    Button shareButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class ScoreActivity extends AppCompatActivity {
             difficultyTextView = findViewById(R.id.difficultyTextView);
             pourcentageTextView = findViewById(R.id.pourcentageTextView);
             backToMenuButton = findViewById(R.id.backToMenuButton);
+            shareButton = findViewById(R.id.shareButton);
 
             //récupère les valeurs envoyées par la page du quiz
             Intent intent = getIntent();
@@ -56,6 +59,22 @@ public class ScoreActivity extends AppCompatActivity {
                 startActivity(intent1);
                 finish();
             });
+
+            //Bonton partager
+            shareButton.setOnClickListener(view -> {
+                //Modifier le texte à envoyer
+                String message = "J'ai eu " + totalCorrectAnswers + "/" + totalQuestions +
+                        " au quiz " + difficulty + " sur l'app cacaQuessQuizPenisJapon!" +
+                        "https://fr.pornhub.com/";
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, message);
+
+                // ouvre le sélecteur Android pour choisir l’app (SMS, WhatsApp, etc.)
+                startActivity(Intent.createChooser(shareIntent, "Partager via"));
+            });
+
 
             return insets;
         });
