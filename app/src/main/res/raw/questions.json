@@ -1,0 +1,9 @@
+[
+  {
+    "videoPath": "android.resource://com.example.app/raw/sushi",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Sushis", "Capotes", "Assurances"],
+    "correctAnswer": "Sushis",
+    "pauseTimeMs": 4000
+  }
+]

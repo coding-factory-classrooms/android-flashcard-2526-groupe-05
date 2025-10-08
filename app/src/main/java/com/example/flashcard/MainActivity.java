@@ -1,5 +1,14 @@
 package com.example.flashcard;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,41 +40,30 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
             startQuizBtn = findViewById(R.id.startQuizBtn);
-
             startQuizBtn.setOnClickListener(view -> showDifficultyDialog());
 
-
-            //Bouton temporaire pour tester ScoreActivity
-            //il faut appeler cette fonction à la fin du quiz
-            //il faut une valeur String pour "difficulty" et un int pour "totalCorrectAnswers" et "totalQuestions"
-            /*Button testScoreButton = findViewById(R.id.testScoreButton);
-            testScoreButton.setOnClickListener(view -> {
-                Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
-                intent.putExtra("difficulty", "Facile");
-                intent.putExtra("totalCorrectAnswers", 8);
-                intent.putExtra("totalQuestions", 10);
-                startActivity(intent);
-            });*/
-
-            Button testQuizButton = findViewById(R.id.testQuizButton);
-            testQuizButton.setOnClickListener(view -> {
-                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-                startActivity(intent);
-            });
+            InputStream inputStream = getResources().openRawResource(R.raw.questions);
+            Reader reader = new InputStreamReader(inputStream);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Question>>(){}.getType();
+            List<Question> questionList = gson.fromJson(reader, listType);
 
             return insets;
         });
     }
 
     private void showDifficultyDialog() {
-        final String[] levels = {"Facile", "Moyen", "Difficile"};
+        final String[] levels = {"Normal", "Hardcore"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choisis ton niveau de difficulté");
         builder.setItems(levels, (dialog, which) -> {
             String selected = levels[which];
             Toast.makeText(this, "Niveau choisi : " + selected, Toast.LENGTH_SHORT).show();
-            //  Ici je pourrais ensuite lancer mon QuizActivity selon le niveau choisi
+            Intent intent = new Intent(MainActivity.this, QuizActivity.class);
+            intent.putExtra("difficulty", selected);
+            ArrayList<Question> questions = (ArrayList<Question>) getIntent().getSerializableExtra("questions");
+            startActivity(intent);
         });
         builder.setNegativeButton("Annuler", (dialog, which) -> dialog.dismiss());
         builder.show();

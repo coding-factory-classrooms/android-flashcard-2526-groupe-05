@@ -3,11 +3,12 @@ package com.example.flashcard;
 
 import android.content.Context;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Question {
+public class Question implements Serializable {
     private String videoPath;
     private String questionText;
     private List<String> options;
@@ -35,14 +36,14 @@ public class Question {
         List<Question> questionList = new ArrayList<>();
 
         questionList.add(new Question(
-                "android.resource://" + context.getPackageName() + "/" + R.raw.pub1,
-                "De quelle marque s’agit-il ?",
-                Arrays.asList("Old Spice", "Axe", "Dior"),
-                "Old Spice",
+                "android.resource://" + context.getPackageName() + "/" + R.raw.sushi,
+                "Pour quel produit est cette pub ?",
+                Arrays.asList("Sushis", "Capotes", "Assurances"),
+                "Sushis",
                 4000
         ));
 
-        questionList.add(new Question(
+        /*questionList.add(new Question(
                 "android.resource://" + context.getPackageName() + "/" + R.raw.pub2,
                 "Quel produit est vendu à la fin ?",
                 Arrays.asList("Chocolat", "Voiture", "Parfum"),
