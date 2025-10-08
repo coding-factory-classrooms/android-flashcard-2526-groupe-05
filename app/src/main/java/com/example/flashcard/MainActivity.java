@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
             startQuizBtn = findViewById(R.id.startQuizBtn);
             startQuizBtn.setOnClickListener(view -> showDifficultyDialog());
 
+            Button aboutButton = findViewById(R.id.aboutButton);
+            aboutButton.setOnClickListener(view -> {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+            });
+
             InputStream inputStream = getResources().openRawResource(R.raw.questions);
             Reader reader = new InputStreamReader(inputStream);
             Gson gson = new Gson();
