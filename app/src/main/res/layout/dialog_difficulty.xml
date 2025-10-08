@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_dialog"
+    android:padding="24dp"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/difficultyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choisis ton niveau"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnEasy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Beginner"
+        android:textColor="@android:color/white"
+        android:background="@drawable/btn_easy_bg"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Intermediate"
+        android:textColor="@android:color/white"
+        android:background="@drawable/btn_medium_bg"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnHard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="master"
+        android:textColor="@android:color/white"
+        android:background="@drawable/btn_hard_bg"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnHardcore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="💀 god  💀"
+        android:textColor="#FF1744"
+        android:textStyle="bold"
+        android:background="@drawable/btn_hardcore_bg"
+        android:layout_marginTop="8dp"/>
+</LinearLayout>
