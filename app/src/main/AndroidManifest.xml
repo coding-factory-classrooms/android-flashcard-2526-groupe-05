@@ -18,26 +18,26 @@
             android:name=".QuestionListActivity"
             android:exported="false" />
         <activity
-            android:name=".AboutActivity"
+            android:name=".ui.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".AboutActivity2"
+            android:name=".ui.AboutActivity2"
             android:exported="false" />
         <activity
-            android:name=".ScoreActivity"
+            android:name=".ui.ScoreActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizActivity"
+            android:name=".ui.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

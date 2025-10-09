@@ -1,4 +1,4 @@
-package com.example.flashcard;
+package com.example.flashcard.ui;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,7 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.card.MaterialCardView;
+import com.example.flashcard.R;
 
 public class AboutActivity extends AppCompatActivity {
 
