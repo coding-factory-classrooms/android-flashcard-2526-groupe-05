@@ -2,6 +2,7 @@ package com.example.flashcard;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,10 +33,13 @@ public class QuizActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private Button validateButton;
     private TextView questionTextView;
+    private TextView answerFeedback;
+    private Button nextQuestionButton;
 
     private ArrayList<Question> questions = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private int totalCorrectAnswers = 0;
+    private String difficulty;
 
     private Handler handler = new Handler();
 
@@ -53,10 +57,14 @@ public class QuizActivity extends AppCompatActivity {
             return insets;
         });
 
+        difficulty = getIntent().getStringExtra("difficulty");
         videoView = findViewById(R.id.videoView);
         radioGroup = findViewById(R.id.quizRadioGroup);
         validateButton = findViewById(R.id.validateButton);
         questionTextView = findViewById(R.id.questionText);
+        answerFeedback = findViewById(R.id.answerFeedback);
+        nextQuestionButton = findViewById(R.id.nextQuestionButton);
+
 
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
@@ -108,6 +116,9 @@ public class QuizActivity extends AppCompatActivity {
         // Configure la question
         questionTextView.setText(q.getQuestionText());
         radioGroup.removeAllViews();
+        answerFeedback.setText("");
+        answerFeedback.setVisibility(View.GONE);
+        nextQuestionButton.setVisibility(View.GONE);
         for (String option : q.getOptions()) {
             RadioButton rb = new RadioButton(this);
             rb.setText(option);
@@ -119,16 +130,25 @@ public class QuizActivity extends AppCompatActivity {
 
         // Lecture vidéo
         videoView.setVideoURI(Uri.parse(q.getVideoPath()));
+        videoView.setOnPreparedListener(mp -> {
+            if ("Hardcore".equalsIgnoreCase(difficulty)) {
+                mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(3f));
+            }
+        });
         videoView.start();
 
         // ⏸ Pause automatique au moment défini
+        long adjustedPauseTime = q.getPauseTimeMs();
+        if ("Hardcore".equalsIgnoreCase(difficulty)) {
+            adjustedPauseTime /= 3;
+        }
         handler.postDelayed(() -> {
             if (videoView.isPlaying()) {
                 videoView.pause();
                 radioGroup.setVisibility(View.VISIBLE);
                 validateButton.setVisibility(View.VISIBLE);
             }
-        }, q.getPauseTimeMs());
+        }, adjustedPauseTime);
 
         validateButton.setOnClickListener(v -> {
             int checkedId = radioGroup.getCheckedRadioButtonId();
@@ -137,22 +157,32 @@ public class QuizActivity extends AppCompatActivity {
             RadioButton selected = findViewById(checkedId);
             if (selected.getText().toString().equals(q.getCorrectAnswer())) {
                 totalCorrectAnswers++;
+                answerFeedback.setText("Bonne réponse !");
+                answerFeedback.setTextColor(Color.GREEN);
+            } else {
+                answerFeedback.setText("Mauvaise réponse ! La bonne était : " + q.getCorrectAnswer());
+                answerFeedback.setTextColor(Color.RED);
             }
 
             radioGroup.setVisibility(View.GONE);
             validateButton.setVisibility(View.GONE);
+            answerFeedback.setVisibility(View.VISIBLE);
+
             videoView.start();
 
-            // Quand la vidéo finit, on passe à la suivante
             videoView.setOnCompletionListener(mp -> {
-                currentQuestionIndex++;
-                showQuestion(currentQuestionIndex);
+                nextQuestionButton.setVisibility(View.VISIBLE);
+                nextQuestionButton.setOnClickListener(view -> {
+                    currentQuestionIndex++;
+                    showQuestion(currentQuestionIndex);
+                });
             });
         });
     }
 
     private void goToScorePage() {
         Intent intent = new Intent(QuizActivity.this, ScoreActivity.class);
+        intent.putExtra("difficulty", difficulty);
         intent.putExtra("totalCorrectAnswers", totalCorrectAnswers);
         intent.putExtra("totalQuestions", questions.size());
         startActivity(intent);

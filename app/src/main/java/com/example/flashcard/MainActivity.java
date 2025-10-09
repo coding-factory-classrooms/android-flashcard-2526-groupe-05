@@ -42,22 +42,11 @@ public class MainActivity extends AppCompatActivity {
             startQuizBtn = findViewById(R.id.startQuizBtn);
             startQuizBtn.setOnClickListener(view -> showDifficultyDialog());
 
-            Button testQuizButton = findViewById(R.id.testQuizButton);
-            testQuizButton.setOnClickListener(view -> {
-                Intent intent = new Intent(MainActivity.this, QuizActivity.class);
-                startActivity(intent);
-            });
             Button aboutButton = findViewById(R.id.aboutButton);
             aboutButton.setOnClickListener(view -> {
                 Intent intent = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
             });
-
-//            InputStream inputStream = getResources().openRawResource(R.raw.questions);
-//            Reader reader = new InputStreamReader(inputStream);
-//            Gson gson = new Gson();
-//            Type listType = new TypeToken<List<Question>>(){}.getType();
-//            List<Question> questionList = gson.fromJson(reader, listType);
 
             return insets;
         });
@@ -80,38 +69,5 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
 }
-
-        /*final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_difficulty);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        Button btnEasy = dialog.findViewById(R.id.btnEasy);
-        Button btnMedium = dialog.findViewById(R.id.btnMedium);
-        Button btnHard = dialog.findViewById(R.id.btnHard);
-        Button btnHardcore = dialog.findViewById(R.id.btnHardcore);
-        btnEasy.setOnClickListener(v -> {
-            Toast.makeText(this, "Beginner mode", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-            // Lancer QuizActivity avec niveau Facile
-
-            btnMedium.setOnClickListener(view -> {
-                Toast.makeText(this, "Intermediate mode", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                // Lancer QuizActivity avec niveau Moyen
-            });
-
-            btnHard.setOnClickListener(view -> {
-                Toast.makeText(this, "Master mode", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                // Lancer QuizActivity avec niveau Difficile
-            });
-
-            btnHardcore.setOnClickListener(view -> {
-                Toast.makeText(this, " GOD mode  ! ", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-                // Lancer QuizActivity avec niveau Hardcore
-            });
-
-            dialog.show();*/
 
 
