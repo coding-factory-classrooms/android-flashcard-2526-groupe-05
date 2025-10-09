@@ -21,9 +21,6 @@
             android:name=".ui.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.AboutActivity2"
-            android:exported="false" />
-        <activity
             android:name=".ui.ScoreActivity"
             android:exported="false" />
         <activity
