@@ -39,19 +39,17 @@ public class QuestionListActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-// === Ici commence le point 5 ===
         try {
             InputStream is = getAssets().open("questions.json");
             int size = is.available();
-            byte[] buffer = new byte[size];
+            byte[] buffer = new byte[size];                                 //Json recover
             is.read(buffer);
             is.close();
-
             String json = new String(buffer, "UTF-8");
             JSONArray jsonArray = new JSONArray(json);
 
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
+                JSONObject obj = jsonArray.getJSONObject(i);                //video path recover
                 String videoPath = obj.getString("videoPath");
 
                 itemList.add(new Item("Video " + (i+1), videoPath));

@@ -31,7 +31,7 @@ public class AboutActivity extends AppCompatActivity {
         appName.setText("Caca Pipi Fesses, la meilleur app de quiz du monde");
         groupName.setText("Killian, Mathéo, Raphaël, Lenny");
 
-        // Récupération dynamique du numéro de version
+        // version number dynamic
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             versionName.setText(pInfo.versionName);

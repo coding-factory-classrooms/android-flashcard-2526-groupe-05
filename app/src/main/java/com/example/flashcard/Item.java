@@ -20,7 +20,7 @@ public class Item {
         this.video = video;
     }
 
-    public Item(String title, String video) {
+    public Item(String title, String video) {  //each line of RecycleView
         this.title = title;
         this.video = video;
 

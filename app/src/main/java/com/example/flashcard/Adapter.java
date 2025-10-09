@@ -26,17 +26,31 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder>{
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.activity_item_view, parent,false));
+            return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.activity_item_view, parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Item item = items.get(position);
-        holder.titleView.setText(item.getTitle());
+
+        switch (position) {
+            case 0:
+                holder.titleView.setText("Pub : Sushi");
+                break;
+            case 1:
+                holder.titleView.setText("Pub : Bonbon");
+                break;
+            case 2:
+                holder.titleView.setText("Pub : Boisson");
+                break;
+            default:
+                holder.titleView.setText(item.getTitle());
+                break;
+        }
         holder.videoView.setVideoPath(item.getVideo());
 
-        // Optionnel : préparer la vidéo sans démarrer
-        holder.videoView.seekTo(1); // montre la première frame
+
+        holder.videoView.seekTo(1); // show the first frame
 
     }
 

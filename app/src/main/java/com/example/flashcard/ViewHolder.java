@@ -17,7 +17,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         titleView = itemView.findViewById(R.id.titleView);
         videoView = itemView.findViewById(R.id.videoView);
 
-        // Clic sur la vidéo pour play/pause
+        // a clic to play/pause the video
         videoView.setOnClickListener(v -> {
             if (videoView.isPlaying()) {
                 videoView.pause();
