@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Niveau choisi : " + selected, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, QuizActivity.class);
             intent.putExtra("difficulty", selected);
-            ArrayList<Question> questions = (ArrayList<Question>) getIntent().getSerializableExtra("questions");
+            //ArrayList<Question> questions = (ArrayList<Question>) getIntent().getSerializableExtra("questions");
             startActivity(intent);
         });
         builder.setNegativeButton("Annuler", (dialog, which) -> dialog.dismiss());

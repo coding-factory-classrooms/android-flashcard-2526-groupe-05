@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.activity.EdgeToEdge;
@@ -193,7 +194,16 @@ public class QuizActivity extends AppCompatActivity {
 
     private void validateAnswer(Question q) {
         int checkedId = radioGroup.getCheckedRadioButtonId();
-        if (checkedId == -1) return;
+        //affiche un petit message si on essaye de cliquer sur valiser alors que aucune réponse n'est séléctionné
+        if (checkedId == -1) {
+            Toast.makeText(this, "Veuillez sélectionner une réponse !", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        RadioButton selectedAnswer = findViewById(checkedId);
+        if (selectedAnswer == null) {
+            Toast.makeText(this, "Erreur, aucune option sélectionnée.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //Vérifie si on à sélectionné la bonne réponse, si oui ajout 1 dans le total de bonne réponses
         RadioButton selected = findViewById(checkedId);
