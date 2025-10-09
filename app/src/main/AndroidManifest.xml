@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Flashcard">
         <activity
-            android:name=".item_view"
+            android:name=".ItemViewActivity"
             android:exported="false" />
         <activity
-            android:name=".question_list"
+            android:name=".QuestionListActivity"
             android:exported="false" />
         <activity
             android:name=".AboutActivity"
