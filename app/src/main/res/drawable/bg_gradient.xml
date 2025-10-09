@@ -8,4 +8,24 @@
         android:angle="45" />
 
     <corners android:radius="12dp" />
+
+
+
+
+    <gradient xmlns:android="http://schemas.android.com/apk/res/android"
+        android:startColor="#7F7FD5"
+        android:centerColor="#86A8E7"
+        android:endColor="#91EAE4"
+        android:angle="45" />
+
+
+    <gradient xmlns:android="http://schemas.android.com/apk/res/android"
+        android:startColor="#FF9A9E"
+        android:endColor="#A18CD1"
+        android:angle="45"/>
+
+
+
+
 </shape>
+
