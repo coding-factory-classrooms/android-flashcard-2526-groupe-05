@@ -35,6 +35,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView questionTextView;
     private TextView answerFeedback;
     private Button nextQuestionButton;
+    private Button replayButton;
 
     private ArrayList<Question> questions = new ArrayList<>();
     private int currentQuestionIndex = 0;
@@ -64,7 +65,7 @@ public class QuizActivity extends AppCompatActivity {
         questionTextView = findViewById(R.id.questionText);
         answerFeedback = findViewById(R.id.answerFeedback);
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
-
+        replayButton = findViewById(R.id.replayButton);
 
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
@@ -106,6 +107,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void showQuestion(int index) {
+        //Si toutes les questions ont été répondu, aller à la page des scores
         if (index >= questions.size()) {
             goToScorePage();
             return;
@@ -113,22 +115,44 @@ public class QuizActivity extends AppCompatActivity {
 
         Question q = questions.get(index);
 
-        // Configure la question
+        //Affiche les questions actuelles dans le textView
         questionTextView.setText(q.getQuestionText());
+
+        //Masque les textView et les Boutons
         radioGroup.removeAllViews();
         answerFeedback.setText("");
         answerFeedback.setVisibility(View.GONE);
         nextQuestionButton.setVisibility(View.GONE);
+        replayButton.setVisibility(View.GONE);
+
+        //Affiche les boutons de réponses pour la question actuelle
         for (String option : q.getOptions()) {
             RadioButton rb = new RadioButton(this);
             rb.setText(option);
             radioGroup.addView(rb);
         }
-
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
 
-        // Lecture vidéo
+        //Joue la video avec la pause au bon moment
+        playVideoWithPause(q);
+
+        //Bouton pour rejouer la vidéo
+        replayButton.setOnClickListener(v -> {
+            replayButton.setVisibility(View.GONE);
+            radioGroup.setVisibility(View.GONE);
+            validateButton.setVisibility(View.GONE);
+            answerFeedback.setVisibility(View.GONE);
+
+            playVideoWithPause(q); // relance la vidéo depuis le début avec pause
+        });
+
+        //vérification de la réponse et passer a la question suivante
+        validateButton.setOnClickListener(v -> validateAnswer(q));
+    }
+
+    private void playVideoWithPause(Question q) {
+        // Configurer et lancer la vidéo
         videoView.setVideoURI(Uri.parse(q.getVideoPath()));
         videoView.setOnPreparedListener(mp -> {
             if ("Hardcore".equalsIgnoreCase(difficulty)) {
@@ -137,48 +161,59 @@ public class QuizActivity extends AppCompatActivity {
         });
         videoView.start();
 
-        // ⏸ Pause automatique au moment défini
+        // Supprimer d'éventuels callbacks précédents
+        handler.removeCallbacksAndMessages(null);
+
+        //met la video sur pause au bon moment
+        //Si mode hardcore est séléctionné alors joue la video en accéléré
         long adjustedPauseTime = q.getPauseTimeMs();
-        if ("Hardcore".equalsIgnoreCase(difficulty)) {
-            adjustedPauseTime /= 3;
-        }
+        if ("Hardcore".equalsIgnoreCase(difficulty)) adjustedPauseTime /= 3;
+
         handler.postDelayed(() -> {
             if (videoView.isPlaying()) {
                 videoView.pause();
                 radioGroup.setVisibility(View.VISIBLE);
                 validateButton.setVisibility(View.VISIBLE);
+                replayButton.setVisibility(View.VISIBLE);
             }
         }, adjustedPauseTime);
+    }
 
-        validateButton.setOnClickListener(v -> {
-            int checkedId = radioGroup.getCheckedRadioButtonId();
-            if (checkedId == -1) return;
+    private void validateAnswer(Question q) {
+        int checkedId = radioGroup.getCheckedRadioButtonId();
+        if (checkedId == -1) return;
 
-            RadioButton selected = findViewById(checkedId);
-            if (selected.getText().toString().equals(q.getCorrectAnswer())) {
-                totalCorrectAnswers++;
-                answerFeedback.setText("Bonne réponse !");
-                answerFeedback.setTextColor(Color.GREEN);
-            } else {
-                answerFeedback.setText("Mauvaise réponse ! La bonne était : " + q.getCorrectAnswer());
-                answerFeedback.setTextColor(Color.RED);
-            }
+        //Vérifie si on à sélectionné la bonne réponse, si oui ajout 1 dans le total de bonne réponses
+        RadioButton selected = findViewById(checkedId);
+        if (selected.getText().toString().equals(q.getCorrectAnswer())) {
+            totalCorrectAnswers++;
+            answerFeedback.setText("Bonne réponse !");
+            answerFeedback.setTextColor(Color.GREEN);
+        } else {
+            answerFeedback.setText("Mauvaise réponse ! La bonne était : " + q.getCorrectAnswer());
+            answerFeedback.setTextColor(Color.RED);
+        }
 
-            radioGroup.setVisibility(View.GONE);
-            validateButton.setVisibility(View.GONE);
-            answerFeedback.setVisibility(View.VISIBLE);
+        //Masque les réponses, le bouton valider et replay
+        radioGroup.setVisibility(View.GONE);
+        validateButton.setVisibility(View.GONE);
+        replayButton.setVisibility(View.GONE);
+        answerFeedback.setVisibility(View.VISIBLE);
 
-            videoView.start();
+        //Joue la fin de la video
+        videoView.start();
 
-            videoView.setOnCompletionListener(mp -> {
-                nextQuestionButton.setVisibility(View.VISIBLE);
-                nextQuestionButton.setOnClickListener(view -> {
-                    currentQuestionIndex++;
-                    showQuestion(currentQuestionIndex);
-                });
+        // Afficher le bouton “Question suivante” après la fin de la vidéo
+        //Passe à la question suivante si on clique dessus
+        videoView.setOnCompletionListener(mp -> {
+            nextQuestionButton.setVisibility(View.VISIBLE);
+            nextQuestionButton.setOnClickListener(view -> {
+                currentQuestionIndex++;
+                showQuestion(currentQuestionIndex);
             });
         });
     }
+
 
     private void goToScorePage() {
         Intent intent = new Intent(QuizActivity.this, ScoreActivity.class);
