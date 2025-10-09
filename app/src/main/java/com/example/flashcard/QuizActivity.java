@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -38,6 +40,9 @@ public class QuizActivity extends AppCompatActivity {
     private Button nextQuestionButton;
     private Button replayButton;
 
+    private ImageView fondButton;
+
+    private FrameLayout videoContainer;
     private ArrayList<Question> questions = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private int totalCorrectAnswers = 0;
@@ -67,9 +72,12 @@ public class QuizActivity extends AppCompatActivity {
         answerFeedback = findViewById(R.id.answerFeedback);
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
         replayButton = findViewById(R.id.replayButton);
-
+        fondButton = findViewById(R.id.fondButton);
+        videoContainer = findViewById(R.id.videoContainer);
         radioGroup.setVisibility(View.GONE);
+        fondButton.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
+        questionTextView.setVisibility(View.GONE);
 
         loadQuestionsFromJson();
         Collections.shuffle(questions);
@@ -126,6 +134,7 @@ public class QuizActivity extends AppCompatActivity {
         answerFeedback.setVisibility(View.GONE);
         nextQuestionButton.setVisibility(View.GONE);
         replayButton.setVisibility(View.GONE);
+        questionTextView.setVisibility(View.GONE);
 
         //Affiche les boutons de réponses pour la question actuelle
         for (String option : q.getOptions()) {
@@ -135,6 +144,8 @@ public class QuizActivity extends AppCompatActivity {
         }
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
+        fondButton.setVisibility(View.GONE);
+        questionTextView.setVisibility(View.GONE);
 
         //Joue la video avec la pause au bon moment
         playVideoWithPause(q);
@@ -144,9 +155,11 @@ public class QuizActivity extends AppCompatActivity {
             replayButton.setVisibility(View.GONE);
             radioGroup.setVisibility(View.GONE);
             validateButton.setVisibility(View.GONE);
+            fondButton.setVisibility(View.GONE);
             answerFeedback.setVisibility(View.GONE);
+            questionTextView.setVisibility(View.GONE);
 
-            playVideoWithPause(q); // relance la vidéo depuis le début avec pause
+            animateVideoDownAndReset(() -> playVideoWithPause(questions.get(currentQuestionIndex)));
         });
 
         //vérification de la réponse et passer a la question suivante
@@ -174,11 +187,45 @@ public class QuizActivity extends AppCompatActivity {
         handler.postDelayed(() -> {
             if (videoView.isPlaying()) {
                 videoView.pause();
-                radioGroup.setVisibility(View.VISIBLE);
-                validateButton.setVisibility(View.VISIBLE);
-                replayButton.setVisibility(View.VISIBLE);
+                animateVideoUpAndShowUI(); // 👈 Animation au lieu d’apparition brutale
             }
         }, adjustedPauseTime);
+    }
+
+    private void animateVideoUpAndShowUI() {
+        // Déplace la vidéo vers le haut (position absolue)
+        videoContainer.animate()
+                .translationY(-700f)  // absolute, pas relative
+                .setDuration(700)
+                .withEndAction(() -> {
+                    // Affiche les éléments du quiz en fondu
+                    radioGroup.setAlpha(0f);
+                    validateButton.setAlpha(0f);
+                    replayButton.setAlpha(0f);
+                    fondButton.setAlpha(0f);
+                    questionTextView.setAlpha(0f);
+
+                    radioGroup.setVisibility(View.VISIBLE);
+                    validateButton.setVisibility(View.VISIBLE);
+                    replayButton.setVisibility(View.VISIBLE);
+                    fondButton.setVisibility(View.VISIBLE);
+                    questionTextView.setVisibility(View.VISIBLE);
+
+                    radioGroup.animate().alpha(1f).setDuration(500).start();
+                    validateButton.animate().alpha(1f).setDuration(500).start();
+                    replayButton.animate().alpha(1f).setDuration(500).start();
+                    fondButton.animate().alpha(1f).setDuration(500).start();
+                    questionTextView.animate().alpha(1f).setDuration(500).start();
+                })
+                .start();
+    }
+
+    private void animateVideoDownAndReset(Runnable onAnimationEnd) {
+        videoContainer.animate()
+                .translationY(0f) // remonte à sa position initiale
+                .setDuration(700) // durée identique à la montée pour la cohérence
+                .withEndAction(onAnimationEnd)
+                .start();
     }
 
     private void validateAnswer(Question q) {
@@ -200,6 +247,8 @@ public class QuizActivity extends AppCompatActivity {
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
         replayButton.setVisibility(View.GONE);
+        fondButton.setVisibility(View.GONE);
+        questionTextView.setVisibility(View.GONE);
         answerFeedback.setVisibility(View.VISIBLE);
 
         //Joue la fin de la video
@@ -210,8 +259,12 @@ public class QuizActivity extends AppCompatActivity {
         videoView.setOnCompletionListener(mp -> {
             nextQuestionButton.setVisibility(View.VISIBLE);
             nextQuestionButton.setOnClickListener(view -> {
+                answerFeedback.setVisibility(View.GONE);
+                animateVideoDownAndReset(() -> {
                 currentQuestionIndex++;
                 showQuestion(currentQuestionIndex);
+
+                });
             });
         });
     }

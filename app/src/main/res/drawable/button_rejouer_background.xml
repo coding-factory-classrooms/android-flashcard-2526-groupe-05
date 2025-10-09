@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- État appuyé -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#C1A4D3"/> <!-- Violet clair -->
+            <corners android:radius="24dp" />
+            <stroke android:width="2dp" android:color="#A67BBE"/> <!-- Contour doux -->
+        </shape>
+    </item>
+
+    <!-- État normal -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#B794F6"/> <!-- Violet pastel -->
+            <corners android:radius="24dp" />
+            <stroke android:width="2dp" android:color="#9A73C7"/> <!-- Contour plus foncé -->
+            <shadowColor android:color="#33000000"/>
+        </shape>
+    </item>
+</selector>

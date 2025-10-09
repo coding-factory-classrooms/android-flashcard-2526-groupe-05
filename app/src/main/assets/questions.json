@@ -4,7 +4,7 @@
     "questionText": "Cette Pub est pour quel produit ?",
     "options": ["Sushis", "Capotes", "Assurances"],
     "correctAnswer": "Sushis",
-    "pauseTimeMs": 28000
+    "pauseTimeMs": 27000
   },
   {
     "videoPath": "android.resource://com.example.flashcard/raw/bonbon",
