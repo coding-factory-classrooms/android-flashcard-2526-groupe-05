@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import androidx.annotation.NonNull;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewHolder extends RecyclerView.ViewHolder {
@@ -12,10 +12,18 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     VideoView videoView;
     TextView titleView;
 
-    public ViewHolder(@NonNull View itemView) {
+    public ViewHolder(View itemView) {
         super(itemView);
+        titleView = itemView.findViewById(R.id.titleView);
+        videoView = itemView.findViewById(R.id.videoView);
 
-        videoView = itemView.findViewById(R.id.videoView); //** reference to item_view
-        titleView = itemView.findViewById(R.id.titleView); //**
+        // Clic sur la vidéo pour play/pause
+        videoView.setOnClickListener(v -> {
+            if (videoView.isPlaying()) {
+                videoView.pause();
+            } else {
+                videoView.start();
+            }
+        });
     }
 }

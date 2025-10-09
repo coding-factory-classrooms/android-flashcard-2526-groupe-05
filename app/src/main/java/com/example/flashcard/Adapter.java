@@ -31,8 +31,12 @@ public class Adapter extends RecyclerView.Adapter<ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.titleView.setText(items.get(position).getTitle());
-        holder.videoView.setVideoPath(items.get(position).getVideo());
+        Item item = items.get(position);
+        holder.titleView.setText(item.getTitle());
+        holder.videoView.setVideoPath(item.getVideo());
+
+        // Optionnel : préparer la vidéo sans démarrer
+        holder.videoView.seekTo(1); // montre la première frame
 
     }
 
