@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.VideoView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.activity.EdgeToEdge;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,12 +28,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.recyclerView), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
             startQuizBtn = findViewById(R.id.startQuizBtn);
             startQuizBtn.setOnClickListener(view -> showDifficultyDialog());
+
+            Button questionListButton = findViewById(R.id.questionListButton);
+            questionListButton.setOnClickListener(view -> {
+                Intent intent = new Intent(MainActivity.this, QuestionListActivity.class);
+                startActivity(intent);
+            });
 
             Button aboutButton = findViewById(R.id.aboutButton);
             aboutButton.setOnClickListener(view -> {

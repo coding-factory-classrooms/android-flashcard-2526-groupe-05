@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Flashcard">
         <activity
+            android:name=".ItemViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".QuestionListActivity"
+            android:exported="false" />
+        <activity
             android:name=".AboutActivity"
             android:exported="false" />
         <activity
