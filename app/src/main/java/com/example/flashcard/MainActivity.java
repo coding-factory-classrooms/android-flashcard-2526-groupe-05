@@ -1,16 +1,5 @@
 package com.example.flashcard;
-import android.app.Dialog;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 
 import android.content.Intent;
@@ -64,54 +53,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDifficultyDialog() {
-        final String[] levels = {"Normal", "Hardcore"};
+        final String[] levels = {"⚡ Normal", "💀 Hardcore"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choisis ton niveau de difficulté");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.FuturisticDialogTheme);
+        builder.setTitle("⚔️ Sélection du mode de difficulté");
         builder.setItems(levels, (dialog, which) -> {
             String selected = levels[which];
-            Toast.makeText(this, "Niveau choisi : " + selected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Mode choisi : " + selected, Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(MainActivity.this, QuizActivity.class);
             intent.putExtra("difficulty", selected);
-            ArrayList<Question> questions = (ArrayList<Question>) getIntent().getSerializableExtra("questions");
             startActivity(intent);
         });
         builder.setNegativeButton("Annuler", (dialog, which) -> dialog.dismiss());
         builder.show();
     }
+
 }
 
-        /*final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_difficulty);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
-        Button btnEasy = dialog.findViewById(R.id.btnEasy);
-        Button btnMedium = dialog.findViewById(R.id.btnMedium);
-        Button btnHard = dialog.findViewById(R.id.btnHard);
-        Button btnHardcore = dialog.findViewById(R.id.btnHardcore);
-        btnEasy.setOnClickListener(v -> {
-            Toast.makeText(this, "Beginner mode", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-            // Lancer QuizActivity avec niveau Facile
-
-            btnMedium.setOnClickListener(view -> {
-                Toast.makeText(this, "Intermediate mode", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                // Lancer QuizActivity avec niveau Moyen
-            });
-
-            btnHard.setOnClickListener(view -> {
-                Toast.makeText(this, "Master mode", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                // Lancer QuizActivity avec niveau Difficile
-            });
-
-            btnHardcore.setOnClickListener(view -> {
-                Toast.makeText(this, " GOD mode  ! ", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-                // Lancer QuizActivity avec niveau Hardcore
-            });
-
-            dialog.show();*/
 
 
