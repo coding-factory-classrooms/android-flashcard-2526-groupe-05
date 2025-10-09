@@ -259,6 +259,7 @@ public class QuizActivity extends AppCompatActivity {
         videoView.setOnCompletionListener(mp -> {
             nextQuestionButton.setVisibility(View.VISIBLE);
             nextQuestionButton.setOnClickListener(view -> {
+                nextQuestionButton.setVisibility(View.GONE);
                 answerFeedback.setVisibility(View.GONE);
                 animateVideoDownAndReset(() -> {
                 currentQuestionIndex++;
