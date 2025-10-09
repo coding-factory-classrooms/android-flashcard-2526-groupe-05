@@ -32,15 +32,18 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.recyclerView), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
             startQuizBtn = findViewById(R.id.startQuizBtn);
             startQuizBtn.setOnClickListener(view -> showDifficultyDialog());
+
+            Button questionListButton = findViewById(R.id.questionListButton);
+            questionListButton.setOnClickListener(view -> {
+                Intent intent = new Intent(MainActivity.this, QuestionListActivity.class);
+                startActivity(intent);
+            });
 
             Button aboutButton = findViewById(R.id.aboutButton);
             aboutButton.setOnClickListener(view -> {
