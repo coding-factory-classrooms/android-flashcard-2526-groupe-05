@@ -39,11 +39,14 @@ public class QuizActivity extends AppCompatActivity {
     private Button nextQuestionButton;
     private Button replayButton;
     private TextView questionIndexTextView;
-
     private ArrayList<Question> questions = new ArrayList<>();
     private int currentQuestionIndex = 0;
     private int totalCorrectAnswers = 0;
     private String difficulty;
+    private TextView timerTextView;
+    private Handler timerHandler = new Handler();
+    private Runnable timerRunnable;
+    private int timeLeft;
 
     private Handler handler = new Handler();
 
@@ -70,6 +73,8 @@ public class QuizActivity extends AppCompatActivity {
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
         replayButton = findViewById(R.id.replayButton);
         questionIndexTextView = findViewById(R.id.questionIndexTextView);
+        timerTextView = findViewById(R.id.timerTextView);
+
 
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
@@ -168,7 +173,7 @@ public class QuizActivity extends AppCompatActivity {
         // Configurer et lancer la vidéo
         videoView.setVideoURI(Uri.parse(q.getVideoPath()));
         videoView.setOnPreparedListener(mp -> {
-            if ("Hardcore".equalsIgnoreCase(difficulty)) {
+            if ("💀 Hardcore".equalsIgnoreCase(difficulty)) { //Si mode harcore alors video speed X3
                 mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(3f));
             }
         });
@@ -178,55 +183,93 @@ public class QuizActivity extends AppCompatActivity {
         handler.removeCallbacksAndMessages(null);
 
         //met la video sur pause au bon moment
-        //Si mode hardcore est séléctionné alors joue la video en accéléré
+        //Si mode hardcore est séléctionné alors temps à attendre avant de paule la video est divisé par 3
         long adjustedPauseTime = q.getPauseTimeMs();
-        if ("Hardcore".equalsIgnoreCase(difficulty)) adjustedPauseTime /= 3;
+        if ("💀 Hardcore".equalsIgnoreCase(difficulty)) adjustedPauseTime /= 3;
 
+        //met pause sur la video et affiche les questions/Choix de réponses après un certains temps
         handler.postDelayed(() -> {
             if (videoView.isPlaying()) {
                 videoView.pause();
                 radioGroup.setVisibility(View.VISIBLE);
                 validateButton.setVisibility(View.VISIBLE);
                 replayButton.setVisibility(View.VISIBLE);
+
+                //si mode Time Attack, lancer le timer
+                if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
+                    replayButton.setVisibility(View.GONE);
+                    startTimer();
+                }
             }
         }, adjustedPauseTime);
     }
 
     private void validateAnswer(Question q) {
         int checkedId = radioGroup.getCheckedRadioButtonId();
-        //affiche un petit message si on essaye de cliquer sur valiser alors que aucune réponse n'est séléctionné
+
+        //affiche un message si on essaye de cliquer sur valiser alors que aucune réponse n'est séléctionné
         if (checkedId == -1) {
             Toast.makeText(this, "Veuillez sélectionner une réponse !", Toast.LENGTH_SHORT).show();
             return;
         }
-        RadioButton selectedAnswer = findViewById(checkedId);
-        if (selectedAnswer == null) {
-            Toast.makeText(this, "Erreur, aucune option sélectionnée.", Toast.LENGTH_SHORT).show();
-            return;
+
+        //arrête le timer si le mode time attach est activé
+        if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
+            timerHandler.removeCallbacks(timerRunnable);
+            timerTextView.setVisibility(View.GONE);
         }
 
         //Vérifie si on à sélectionné la bonne réponse, si oui ajout 1 dans le total de bonne réponses
+        //puis appelle fonction handleEndOfQuestion
         RadioButton selected = findViewById(checkedId);
-        if (selected.getText().toString().equals(q.getCorrectAnswer())) {
+        boolean isCorrect = selected.getText().toString().equals(q.getCorrectAnswer());
+        if (isCorrect) {
             totalCorrectAnswers++;
-            answerFeedback.setText("Bonne réponse !");
-            answerFeedback.setTextColor(Color.GREEN);
+            handleEndOfQuestion("Bonne réponse !", Color.GREEN);
         } else {
-            answerFeedback.setText("Mauvaise réponse ! La bonne était : " + q.getCorrectAnswer());
-            answerFeedback.setTextColor(Color.RED);
+            handleEndOfQuestion("Mauvaise réponse ! La bonne était : " + q.getCorrectAnswer(), Color.RED);
         }
+    }
 
-        //Masque les réponses, le bouton valider et replay
+    //affiche le timer de 10 secondes
+    private void startTimer() {
+        timerTextView.setVisibility(View.VISIBLE);
+        timeLeft = 10;
+
+        timerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                timerTextView.setText("⏱ " + timeLeft + "s");
+
+                if (timeLeft <= 0) {
+                    timerTextView.setVisibility(View.GONE);
+                    timerHandler.removeCallbacks(this);
+                    Toast.makeText(QuizActivity.this, "Temps écoulé !", Toast.LENGTH_SHORT).show();
+                    handleEndOfQuestion("Temps écoulé ! Mauvaise réponse !", Color.RED);
+                    return;
+                }
+
+                timeLeft--;
+                timerHandler.postDelayed(this, 1000);
+            }
+        };
+
+        timerHandler.post(timerRunnable);
+    }
+
+    private void handleEndOfQuestion(String feedbackText, int feedbackColor) {
+        //Affiche le message bonne ou mauvaire réponse au joueur
+        answerFeedback.setText(feedbackText);
+        answerFeedback.setTextColor(feedbackColor);
+        answerFeedback.setVisibility(View.VISIBLE);
+
+        //Cache les boutons et options
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
         replayButton.setVisibility(View.GONE);
-        answerFeedback.setVisibility(View.VISIBLE);
 
-        //Joue la fin de la video
+        //lance la fin de la video pous passe à la questions suivante quand on clique sur le bouton
         videoView.start();
-
-        // Afficher le bouton “Question suivante” après la fin de la vidéo
-        //Passe à la question suivante si on clique dessus
         videoView.setOnCompletionListener(mp -> {
             nextQuestionButton.setVisibility(View.VISIBLE);
             nextQuestionButton.setOnClickListener(view -> {
@@ -236,7 +279,7 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-
+    //Renvoie vers la page du score quand on à répondu à toutes les questions
     private void goToScorePage() {
         Intent intent = new Intent(QuizActivity.this, ScoreActivity.class);
         intent.putExtra("difficulty", difficulty);

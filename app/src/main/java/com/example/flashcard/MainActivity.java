@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDifficultyDialog() {
-        final String[] levels = {"⚡ Normal", "💀 Hardcore"};
+        final String[] levels = {"⚡ Normal", "💀 Hardcore", "⏱ Time Attack"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.FuturisticDialogTheme);
         builder.setTitle("⚔️ Sélection du mode de difficulté");
