@@ -37,6 +37,7 @@ public class QuizActivity extends AppCompatActivity {
     private TextView answerFeedback;
     private Button nextQuestionButton;
     private Button replayButton;
+    private TextView questionIndexTextView;
 
     private ArrayList<Question> questions = new ArrayList<>();
     private int currentQuestionIndex = 0;
@@ -67,6 +68,7 @@ public class QuizActivity extends AppCompatActivity {
         answerFeedback = findViewById(R.id.answerFeedback);
         nextQuestionButton = findViewById(R.id.nextQuestionButton);
         replayButton = findViewById(R.id.replayButton);
+        questionIndexTextView = findViewById(R.id.questionIndexTextView);
 
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
@@ -116,6 +118,9 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         Question q = questions.get(index);
+
+        // Affiche l'index actuel de la question
+        questionIndexTextView.setText("Question " + (index + 1) + "/" + questions.size());
 
         //Affiche les questions actuelles dans le textView
         questionTextView.setText(q.getQuestionText());
