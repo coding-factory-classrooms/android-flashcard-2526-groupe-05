@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -71,6 +72,7 @@ public class QuizActivity extends AppCompatActivity {
         validateButton.setVisibility(View.GONE);
 
         loadQuestionsFromJson();
+        Collections.shuffle(questions);
         showQuestion(0);
     }
 
