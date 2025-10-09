@@ -257,6 +257,11 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Veuillez sélectionner une réponse !", Toast.LENGTH_SHORT).show();
             return;
         }
+        RadioButton selectedAnswer = findViewById(checkedId);
+        if (selectedAnswer == null) {
+            Toast.makeText(this, "Erreur, aucune option sélectionnée.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //arrête le timer si le mode time attach est activé
         if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
