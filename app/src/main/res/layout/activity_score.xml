@@ -104,6 +104,21 @@
                     android:background="@drawable/btn_purple"
                     android:layout_marginStart="8dp"
                     android:padding="12dp"/>
+
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="16dp"
+                    android:progress="0"
+                    android:max="100"
+                    android:progressTint="@color/purple_500"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:scaleY="2"
+                    android:indeterminate="false" />
+
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
