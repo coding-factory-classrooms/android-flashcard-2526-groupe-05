@@ -5,17 +5,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient_modern">
+    android:layout_height="match_parent">
+
+    <!-- IMAGE DE FOND JAPONAISE -->
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/jappp"
+        android:contentDescription="Image de fond japonaise"
+        android:alpha="0.85"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- GRADIENT EN SUPERPOSITION POUR LISIBILITÉ -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_gradient_modern"
+        android:alpha="0.4" />
+
     <!-- TITRE PRINCIPAL -->
-
-    <!-- SOUS-TITRE -->
-
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="casual"
         android:letterSpacing="0.05"
         android:shadowColor="#00FFFF"
         android:shadowDx="2"
@@ -26,15 +45,16 @@
         android:textSize="38sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- SOUS-TITRE -->
     <TextView
         android:id="@+id/appSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="casual"
         android:letterSpacing="0.05"
         android:shadowColor="#FFA500"
         android:shadowDx="1"
@@ -47,27 +67,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appTitle" />
 
-    <Button
-        android:id="@+id/startQuizBtn"
-        android:layout_width="280dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="500dp"
-        android:background="@drawable/btn_start_quiz"
-        android:elevation="12dp"
-        android:letterSpacing="0.08"
-        android:shadowColor="#00FFFF"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="10"
-        android:text="Démarrer le Quiz"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appSubtitle" />
-
+    <!-- IMAGE LUFFY -->
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="467dp"
@@ -82,29 +82,38 @@
         app:layout_constraintVertical_bias="0.418"
         app:srcCompat="@drawable/luffy" />
 
+    <!-- BOUTON DÉMARRER -->
+    <Button
+        android:id="@+id/startQuizBtn"
+        android:layout_width="280dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="500dp"
+        android:background="@drawable/btn_start_quiz"
+        android:elevation="12dp"
+        android:fontFamily="casual"
+        android:letterSpacing="0.08"
+        android:shadowColor="#00FFFF"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="10"
+        android:text="Démarrer le Quiz"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appSubtitle" />
+
+    <!-- BOUTON A PROPOS -->
     <Button
         android:id="@+id/aboutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:text="A propos"
+        android:fontFamily="casual"
+        android:text="À propos"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/startQuizBtn"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/startQuizBtn" />
 
-    <Button
-        android:id="@+id/questionListButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
