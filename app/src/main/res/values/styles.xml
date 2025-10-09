@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="FuturisticDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">#121212</item>
+        <item name="android:textColorPrimary">#00FFFF</item>
+        <item name="android:textColorSecondary">#AAAAAA</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/FuturisticButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/FuturisticButton</item>
+    </style>
+
+    <style name="FuturisticButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#00FFFF</item>
+    </style>
+
+</resources>

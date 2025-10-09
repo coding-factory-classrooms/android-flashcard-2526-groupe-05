@@ -1,17 +1,6 @@
 package com.example.flashcard;
-import android.app.Dialog;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
-
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,16 +42,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showDifficultyDialog() {
-        final String[] levels = {"Normal", "Hardcore"};
+        final String[] levels = {"⚡ Normal", "💀 Hardcore"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Choisis ton niveau de difficulté");
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.FuturisticDialogTheme);
+        builder.setTitle("⚔️ Sélection du mode de difficulté");
         builder.setItems(levels, (dialog, which) -> {
             String selected = levels[which];
-            Toast.makeText(this, "Niveau choisi : " + selected, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Mode choisi : " + selected, Toast.LENGTH_SHORT).show();
+
             Intent intent = new Intent(MainActivity.this, QuizActivity.class);
             intent.putExtra("difficulty", selected);
-            //ArrayList<Question> questions = (ArrayList<Question>) getIntent().getSerializableExtra("questions");
             startActivity(intent);
         });
         builder.setNegativeButton("Annuler", (dialog, which) -> dialog.dismiss());
