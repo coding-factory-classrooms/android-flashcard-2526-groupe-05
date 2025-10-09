@@ -127,12 +127,17 @@ public class QuizActivity extends AppCompatActivity {
         nextQuestionButton.setVisibility(View.GONE);
         replayButton.setVisibility(View.GONE);
 
-        //Affiche les boutons de réponses pour la question actuelle
-        for (String option : q.getOptions()) {
+        // Mélange les options pour cette question
+        ArrayList<String> shuffledOptions = new ArrayList<>(q.getOptions());
+        Collections.shuffle(shuffledOptions);
+
+        // Affiche les boutons de réponses pour la question actuelle
+        for (String option : shuffledOptions) {
             RadioButton rb = new RadioButton(this);
             rb.setText(option);
             radioGroup.addView(rb);
         }
+
         radioGroup.setVisibility(View.GONE);
         validateButton.setVisibility(View.GONE);
 
