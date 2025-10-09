@@ -1,4 +1,4 @@
-package com.example.flashcard;
+package com.example.flashcard.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
