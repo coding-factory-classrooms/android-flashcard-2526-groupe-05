@@ -20,106 +20,107 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <!-- Titre principal -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✨ Résultat du Quiz ✨"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="#2C2C54"
                 android:layout_marginBottom="20dp"
-                android:fontFamily="sans-serif-medium"/>
+                android:fontFamily="sans-serif-medium"
+                android:text="✨ Résultat du Quiz ✨"
+                android:textColor="#2C2C54"
+                android:textSize="26sp"
+                android:textStyle="bold" />
 
             <!-- Résultats -->
             <TextView
                 android:id="@+id/resultTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="Tu as 7/10 bonnes réponses"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 android:textColor="#40407A"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/difficultyTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="Difficulté : Intermédiaire"
-                android:textSize="18sp"
                 android:textColor="#474787"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/pourcentageTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
                 android:text="Taux de réussite : 70%"
-                android:textSize="20sp"
                 android:textColor="#218C74"
-                android:textStyle="bold"
-                android:layout_marginBottom="30dp"/>
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <!-- Barre de séparation -->
             <View
                 android:layout_width="80dp"
                 android:layout_height="2dp"
-                android:background="#B33939"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                android:background="#B33939" />
 
             <!-- Boutons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center"
+                android:orientation="horizontal"
                 android:weightSum="2">
-
-                <Button
-                    android:id="@+id/backToMenuButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="🏠 Menu"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:background="@drawable/btn_blue"
-                    android:layout_marginEnd="8dp"
-                    android:padding="12dp"/>
 
                 <Button
                     android:id="@+id/shareButton"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_purple"
+                    android:padding="12dp"
                     android:text="🚀 Partager"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp"
-                    android:background="@drawable/btn_purple"
-                    android:layout_marginStart="8dp"
-                    android:padding="12dp"/>
+                    android:textSize="16sp" />
 
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="16dp"
-                    android:progress="0"
-                    android:max="100"
-                    android:progressTint="@color/purple_500"
-                    android:backgroundTint="@android:color/darker_gray"
-                    android:scaleY="2"
-                    android:indeterminate="false" />
 
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@android:color/darker_gray"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"
+                android:progressTint="@color/purple_500"
+                android:scaleY="2" />
+
+            <Button
+                android:id="@+id/backToMenuButton"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_blue"
+                android:padding="12dp"
+                android:text="🏠 Menu"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

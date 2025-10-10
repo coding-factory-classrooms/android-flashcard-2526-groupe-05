@@ -120,13 +120,13 @@ public class QuizActivity extends AppCompatActivity {
         videoView.setVideoURI(Uri.parse(q.getVideoPath()));
         videoView.setOnPreparedListener(mp -> {
             if ("💀 Hardcore".equalsIgnoreCase(difficulty))
-                mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(3f));
+                mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(5f));
         });
         videoView.start();
 
         handler.removeCallbacksAndMessages(null);
         long pauseTime = "💀 Hardcore".equalsIgnoreCase(difficulty)
-                ? q.getPauseTimeMs() / 3
+                ? q.getPauseTimeMs() / 5
                 : q.getPauseTimeMs();
 
         handler.postDelayed(() -> {
