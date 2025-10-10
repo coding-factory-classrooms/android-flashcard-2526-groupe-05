@@ -88,6 +88,5 @@ public class ScoreActivity extends AppCompatActivity {
             shareIntent.putExtra(Intent.EXTRA_TEXT, message);
             startActivity(Intent.createChooser(shareIntent, "Partager via"));
         });
-
     }
 }

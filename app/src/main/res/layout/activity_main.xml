@@ -120,12 +120,13 @@
         android:id="@+id/questionListButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_marginBottom="100dp"
+        android:fontFamily="casual"
+        android:text="Liste des vidéos"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintEnd_toEndOf="@+id/startQuizBtn"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/startQuizBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
