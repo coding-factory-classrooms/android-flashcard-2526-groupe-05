@@ -24,7 +24,7 @@ import java.util.Collections;
 
 public class QuizActivity extends AppCompatActivity {
 
-    // ------------------- UI -------------------
+    // ---------- UI Components ----------
     private VideoView videoView;
     private RadioGroup radioGroup;
     private Button validateButton, nextButton, replayButton;
@@ -32,19 +32,19 @@ public class QuizActivity extends AppCompatActivity {
     private ImageView fondButton, fondButton2;
     private FrameLayout videoContainer;
 
-    // ------------------- Données -------------------
+    // ---------- Data ----------
     private ArrayList<Question> questions;
     private int currentIndex = 0, totalCorrect = 0, timeLeft;
     private String difficulty;
 
-    // ------------------- Audio -------------------
+    // ---------- Audio ----------
     private MediaPlayer mediaPlayer;
 
-    // ------------------- Handlers -------------------
+    // ---------- Handlers ----------
     private final Handler handler = new Handler(), timerHandler = new Handler();
     private Runnable timerRunnable;
 
-    // ------------------- LIFECYCLE -------------------
+    // ---------- Lifecycle ----------
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class QuizActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_quiz);
 
+        // Handle screen padding for devices with notches / system bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
@@ -61,23 +62,27 @@ public class QuizActivity extends AppCompatActivity {
         initViews();
         difficulty = getIntent().getStringExtra("difficulty");
 
-        // 💡 Cache le bouton replay en mode Time Attack
         if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
             replayButton.setVisibility(View.INVISIBLE);
             fondButton2.setVisibility(View.INVISIBLE);
         }
 
+        // Load and shuffle questions
         questions = QuestionLoader.loadFromJson(this, "questions.json");
         Collections.shuffle(questions);
+
+        // Display the first question
         showQuestion(currentIndex);
     }
 
+    //stop music if activity not the first plan
     @Override
     protected void onPause() {
         super.onPause();
         stopMusic();
     }
 
+    //Destroy music
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -88,7 +93,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    // ------------------- INITIALISATION -------------------
+    // ---------- Initialization ----------
     private void initViews() {
         videoView = findViewById(R.id.videoView);
         radioGroup = findViewById(R.id.quizRadioGroup);
@@ -106,19 +111,22 @@ public class QuizActivity extends AppCompatActivity {
         setVisible(false, radioGroup, fondButton, fondButton2, validateButton, questionText, feedbackText, nextButton);
     }
 
-    // ------------------- AFFICHAGE QUESTION -------------------
+    // ---------- Show Question ----------
+
+    //when fisnish all question --> page score
     private void showQuestion(int index) {
         if (index >= questions.size()) {
             goToScorePage();
             return;
         }
 
+        //take the next questions in the list
         Question q = questions.get(index);
         questionIndexText.setText("Question " + (index + 1) + "/" + questions.size());
         questionText.setText(q.getQuestionText());
         resetUI();
 
-        // Ajout des choix aléatoires
+        // Create shuffled answer buttons
         radioGroup.removeAllViews();
         ArrayList<String> shuffled = new ArrayList<>(q.getOptions());
         Collections.shuffle(shuffled);
@@ -133,6 +141,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void setupListeners(Question q) {
+
         if (!"⏱ Time Attack".equalsIgnoreCase(difficulty)) {
             replayButton.setOnClickListener(v -> {
                 hideQuizUI();
@@ -142,17 +151,20 @@ public class QuizActivity extends AppCompatActivity {
         validateButton.setOnClickListener(v -> validateAnswer(q));
     }
 
-    // ------------------- VIDÉO -------------------
+    // ---------- Video Handling ----------
     private void playVideoWithPause(Question q) {
-        stopMusic(); // 🔇 Coupe la musique à chaque lancement vidéo
+        stopMusic();
 
+        //play the video question.id
         videoView.setVideoURI(Uri.parse(q.getVideoPath()));
         videoView.setOnPreparedListener(mp -> {
+
             if ("💀 Hardcore".equalsIgnoreCase(difficulty))
                 mp.setPlaybackParams(mp.getPlaybackParams().setSpeed(3f));
         });
         videoView.start();
 
+        // Schedule pause during video playback
         handler.removeCallbacksAndMessages(null);
         long pauseTime = "💀 Hardcore".equalsIgnoreCase(difficulty)
                 ? q.getPauseTimeMs() / 3
@@ -162,7 +174,7 @@ public class QuizActivity extends AppCompatActivity {
             if (videoView.isPlaying()) {
                 videoView.pause();
                 animateVideoUp();
-                startMusic(); // 🎵 Lance la musique quand la question est visible
+                startMusic();
                 if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) startTimer();
             }
         }, pauseTime);
@@ -188,23 +200,19 @@ public class QuizActivity extends AppCompatActivity {
                 .start();
     }
 
-    // ------------------- VALIDATION -------------------
+    // ---------- Answer Validation ----------
     private void validateAnswer(Question q) {
         int checkedId = radioGroup.getCheckedRadioButtonId();
         if (checkedId == -1) {
-            Toast.makeText(this, "Veuillez sélectionner une réponse !", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        RadioButton selectedAnswer = findViewById(checkedId);
-        if (selectedAnswer == null) {
-            Toast.makeText(this, "Erreur, aucune option sélectionnée.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select an answer!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        stopMusic(); // 🔇 Stoppe la musique quand la réponse est validée
+        stopMusic();
 
         RadioButton selected = findViewById(checkedId);
         boolean isCorrect = selected.getText().toString().equals(q.getCorrectAnswer());
+
 
         if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
             timerHandler.removeCallbacks(timerRunnable);
@@ -212,9 +220,11 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         totalCorrect += isCorrect ? 1 : 0;
+
         String feedback = isCorrect
-                ? "Bonne réponse !"
-                : "Mauvaise réponse ! La bonne était : " + q.getCorrectAnswer();
+                ? "Correct answer!"
+                : "Wrong answer! The correct one was: " + q.getCorrectAnswer();
+
         handleEndOfQuestion(feedback, isCorrect ? Color.GREEN : Color.RED);
     }
 
@@ -223,7 +233,8 @@ public class QuizActivity extends AppCompatActivity {
         feedbackText.setText(text);
         feedbackText.setTextColor(color);
         feedbackText.setVisibility(View.VISIBLE);
-        videoView.start(); // relance la fin de la vidéo
+
+        videoView.start();
 
         videoView.setOnCompletionListener(mp -> {
             nextButton.setVisibility(View.VISIBLE);
@@ -235,7 +246,7 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    // ------------------- TIMER (Time Attack) -------------------
+    // ---------- Timer (Time Attack Mode) ----------
     private void startTimer() {
         timerText.setVisibility(View.VISIBLE);
         timeLeft = 10;
@@ -246,8 +257,8 @@ public class QuizActivity extends AppCompatActivity {
                 timerText.setText("⏱ " + timeLeft + "s");
                 if (timeLeft-- <= 0) {
                     timerText.setVisibility(View.GONE);
-                    Toast.makeText(QuizActivity.this, "Temps écoulé !", Toast.LENGTH_SHORT).show();
-                    handleEndOfQuestion("Temps écoulé ! Mauvaise réponse !", Color.RED);
+                    Toast.makeText(QuizActivity.this, "Time's up!", Toast.LENGTH_SHORT).show();
+                    handleEndOfQuestion("Time's up! Wrong answer!", Color.RED);
                     stopMusic();
                     return;
                 }
@@ -257,9 +268,9 @@ public class QuizActivity extends AppCompatActivity {
         timerHandler.post(timerRunnable);
     }
 
-    // ------------------- MUSIQUE -------------------
+    // ---------- Music ----------
     private void startMusic() {
-        stopMusic(); // évite le chevauchement
+        stopMusic();
         mediaPlayer = MediaPlayer.create(this, R.raw.question_music);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
@@ -273,7 +284,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    // ------------------- OUTILS UI -------------------
+    // ---------- UI Helpers ----------
     private void resetUI() {
         setVisible(false, radioGroup, fondButton, fondButton2, validateButton, replayButton, questionText, feedbackText, nextButton);
     }
@@ -302,7 +313,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    // ------------------- SCORE -------------------
+    // ---------- Score ----------
     private void goToScorePage() {
         Intent intent = new Intent(this, ScoreActivity.class);
         intent.putExtra("difficulty", difficulty);
