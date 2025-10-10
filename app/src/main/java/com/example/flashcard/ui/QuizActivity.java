@@ -172,6 +172,11 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Veuillez sélectionner une réponse !", Toast.LENGTH_SHORT).show();
             return;
         }
+        RadioButton selectedAnswer = findViewById(checkedId);
+        if (selectedAnswer == null) {
+            Toast.makeText(this, "Erreur, aucune option sélectionnée.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         RadioButton selected = findViewById(checkedId);
         boolean isCorrect = selected.getText().toString().equals(q.getCorrectAnswer());
