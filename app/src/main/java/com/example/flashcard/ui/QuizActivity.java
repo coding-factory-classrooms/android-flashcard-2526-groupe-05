@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.view.View;
 import android.widget.*;
@@ -93,6 +94,9 @@ public class QuizActivity extends AppCompatActivity {
         questionTextView.setText(q.getQuestionText());
         resetUIForNewQuestion();
 
+
+
+
         radioGroup.removeAllViews();
         ArrayList<String> shuffled = new ArrayList<>(q.getOptions());
         Collections.shuffle(shuffled);
@@ -145,6 +149,9 @@ public class QuizActivity extends AppCompatActivity {
                 .withEndAction(() ->
                         fadeInViews(radioGroup, validateButton, replayButton, fondButton, fondButton2, questionTextView))
                 .start();
+        if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
+            setVisible(false,replayButton);
+        }
     }
 
     private void animateVideoDownAndReset(Runnable onEnd) {
@@ -159,6 +166,7 @@ public class QuizActivity extends AppCompatActivity {
             Toast.makeText(this, "Veuillez sélectionner une réponse !", Toast.LENGTH_SHORT).show();
             return;
         }
+        RadioButton selectedAnswer = findViewById(checkedId); if (selectedAnswer == null) { Toast.makeText(this, "Erreur, aucune option sélectionnée.", Toast.LENGTH_SHORT).show(); return; }
 
         if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
             timerHandler.removeCallbacks(timerRunnable);
@@ -181,7 +189,6 @@ public class QuizActivity extends AppCompatActivity {
         answerFeedback.setText(text);
         answerFeedback.setTextColor(color);
         answerFeedback.setVisibility(View.VISIBLE);
-
         videoView.start();
         videoView.setOnCompletionListener(mp -> {
             nextQuestionButton.setVisibility(View.VISIBLE);

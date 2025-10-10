@@ -92,6 +92,18 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
 
+                <Button
+                    android:id="@+id/backToMenuButton"
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_blue"
+                    android:padding="12dp"
+                    android:text="🏠 Menu"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -107,19 +119,6 @@
                 android:progress="0"
                 android:progressTint="@color/purple_500"
                 android:scaleY="2" />
-
-            <Button
-                android:id="@+id/backToMenuButton"
-                android:layout_width="5dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_blue"
-                android:padding="12dp"
-                android:text="🏠 Menu"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="16sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
