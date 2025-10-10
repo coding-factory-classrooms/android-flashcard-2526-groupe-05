@@ -35,9 +35,9 @@
     "pauseTimeMs": 47000
   },
   {
-    "videoPath": "android.resource://com.example.flashcard/raw/hypertension",
+    "videoPath": "android.resource://com.example.flashcard/raw/hypertention",
     "questionText": "Cette Pub est pour quel produit ?",
-    "options": ["Hypertension", "Securité routiere", "Toyota"],
+    "options": ["Hypertension", "Securite routiere", "Toyota"],
     "correctAnswer": "Hypertension",
     "pauseTimeMs": 44000
   },
@@ -52,7 +52,7 @@
     "videoPath": "android.resource://com.example.flashcard/raw/lait",
     "questionText": "Cette Pub est pour quel produit ?",
     "options": ["Gel pour cheveux", "Lait", "Harcelement"],
-    "correctAnswer": "Dentifrice",
+    "correctAnswer": "Lait",
     "pauseTimeMs": 25000
   },
   {
