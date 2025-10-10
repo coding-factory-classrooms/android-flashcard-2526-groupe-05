@@ -3,6 +3,7 @@ package com.example.flashcard.ui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +37,9 @@ public class QuizActivity extends AppCompatActivity {
     private int currentIndex = 0, totalCorrect = 0, timeLeft;
     private String difficulty;
 
+    // ------------------- Audio -------------------
+    private MediaPlayer mediaPlayer;
+
     // ------------------- Handlers -------------------
     private final Handler handler = new Handler(), timerHandler = new Handler();
     private Runnable timerRunnable;
@@ -57,7 +61,7 @@ public class QuizActivity extends AppCompatActivity {
         initViews();
         difficulty = getIntent().getStringExtra("difficulty");
 
-        // 💡 Masque définitivement le bouton replay en mode Time Attack
+        // 💡 Cache le bouton replay en mode Time Attack
         if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) {
             replayButton.setVisibility(View.INVISIBLE);
             fondButton2.setVisibility(View.INVISIBLE);
@@ -66,6 +70,22 @@ public class QuizActivity extends AppCompatActivity {
         questions = QuestionLoader.loadFromJson(this, "questions.json");
         Collections.shuffle(questions);
         showQuestion(currentIndex);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopMusic();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopMusic();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     // ------------------- INITIALISATION -------------------
@@ -124,6 +144,8 @@ public class QuizActivity extends AppCompatActivity {
 
     // ------------------- VIDÉO -------------------
     private void playVideoWithPause(Question q) {
+        stopMusic(); // 🔇 Coupe la musique à chaque lancement vidéo
+
         videoView.setVideoURI(Uri.parse(q.getVideoPath()));
         videoView.setOnPreparedListener(mp -> {
             if ("💀 Hardcore".equalsIgnoreCase(difficulty))
@@ -140,6 +162,7 @@ public class QuizActivity extends AppCompatActivity {
             if (videoView.isPlaying()) {
                 videoView.pause();
                 animateVideoUp();
+                startMusic(); // 🎵 Lance la musique quand la question est visible
                 if ("⏱ Time Attack".equalsIgnoreCase(difficulty)) startTimer();
             }
         }, pauseTime);
@@ -173,6 +196,8 @@ public class QuizActivity extends AppCompatActivity {
             return;
         }
 
+        stopMusic(); // 🔇 Stoppe la musique quand la réponse est validée
+
         RadioButton selected = findViewById(checkedId);
         boolean isCorrect = selected.getText().toString().equals(q.getCorrectAnswer());
 
@@ -193,7 +218,7 @@ public class QuizActivity extends AppCompatActivity {
         feedbackText.setText(text);
         feedbackText.setTextColor(color);
         feedbackText.setVisibility(View.VISIBLE);
-        videoView.start();
+        videoView.start(); // relance la fin de la vidéo
 
         videoView.setOnCompletionListener(mp -> {
             nextButton.setVisibility(View.VISIBLE);
@@ -218,12 +243,29 @@ public class QuizActivity extends AppCompatActivity {
                     timerText.setVisibility(View.GONE);
                     Toast.makeText(QuizActivity.this, "Temps écoulé !", Toast.LENGTH_SHORT).show();
                     handleEndOfQuestion("Temps écoulé ! Mauvaise réponse !", Color.RED);
+                    stopMusic();
                     return;
                 }
                 timerHandler.postDelayed(this, 1000);
             }
         };
         timerHandler.post(timerRunnable);
+    }
+
+    // ------------------- MUSIQUE -------------------
+    private void startMusic() {
+        stopMusic(); // évite le chevauchement
+        mediaPlayer = MediaPlayer.create(this, R.raw.question_music);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+    }
+
+    private void stopMusic() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 
     // ------------------- OUTILS UI -------------------
