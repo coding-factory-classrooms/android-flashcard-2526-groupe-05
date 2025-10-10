@@ -170,7 +170,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void animateVideoUp() {
         videoContainer.animate()
-                .translationY(-700f)
+                .translationY(-500f)
                 .setDuration(700)
                 .withEndAction(() -> fadeInViews(
                         radioGroup, validateButton,
@@ -183,7 +183,7 @@ public class QuizActivity extends AppCompatActivity {
     private void animateVideoDown(Runnable onEnd) {
         videoContainer.animate()
                 .translationY(0f)
-                .setDuration(700)
+                .setDuration(500)
                 .withEndAction(onEnd)
                 .start();
     }

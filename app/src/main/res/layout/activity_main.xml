@@ -87,7 +87,7 @@
         android:id="@+id/startQuizBtn"
         android:layout_width="280dp"
         android:layout_height="60dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="450dp"
         android:background="@drawable/btn_start_quiz"
         android:elevation="12dp"
         android:fontFamily="casual"
