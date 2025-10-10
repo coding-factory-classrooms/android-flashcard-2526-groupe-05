@@ -4,7 +4,7 @@
     "questionText": "Cette Pub est pour quel produit ?",
     "options": ["Sushis", "Capotes", "Assurances"],
     "correctAnswer": "Sushis",
-    "pauseTimeMs": 27000
+    "pauseTimeMs": 26000
   },
   {
     "videoPath": "android.resource://com.example.flashcard/raw/bonbon",
@@ -18,6 +18,55 @@
     "questionText": "Cette Pub est pour quel produit ?",
     "options": ["Chirurgie", "Boisson", "Marque de vetement"],
     "correctAnswer": "Boisson",
-    "pauseTimeMs": 4000
+    "pauseTimeMs": 21000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/chips",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Spa equivalent nippon", "Chips", "Portail de maison"],
+    "correctAnswer": "Chips",
+    "pauseTimeMs": 21000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/dentifrisse",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Dentifrice", "Immobilier", "Nouilles"],
+    "correctAnswer": "Dentifrice",
+    "pauseTimeMs": 47000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/hypertension",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Hypertension", "Securité routiere", "Toyota"],
+    "correctAnswer": "Hypertension",
+    "pauseTimeMs": 44000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/sushi2",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Sushi", "Jeux video", "Assurance vie"],
+    "correctAnswer": "Sushi",
+    "pauseTimeMs": 36000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/lait",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Gel pour cheveux", "Lait", "Harcelement"],
+    "correctAnswer": "Dentifrice",
+    "pauseTimeMs": 25000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/tuiledetoit",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["Deodorant", "Salle de Sport", "Tuiles de toit"],
+    "correctAnswer": "Tuiles de toit",
+    "pauseTimeMs": 77000
+  },
+  {
+    "videoPath": "android.resource://com.example.flashcard/raw/worldoftank",
+    "questionText": "Cette Pub est pour quel produit ?",
+    "options": ["World of Tank", "Raid shadow legends", "Les sims"],
+    "correctAnswer": "World of Tank",
+    "pauseTimeMs": 10000
   }
 ]
